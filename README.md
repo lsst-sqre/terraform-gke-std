@@ -25,6 +25,7 @@ Resources created
 ---
 
 * `google_container_cluster.gke-std`
+* `kubernetes_storage_class.pd_ssd`
 
 See Also
 ---
