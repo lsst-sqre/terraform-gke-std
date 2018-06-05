@@ -5,7 +5,7 @@ provider "google" {
   version = "~> 1.13"
 }
 
-resource "google_container_cluster" "gke-std" {
+resource "google_container_cluster" "gke_std" {
   name               = "${var.name}"
   initial_node_count = "${var.initial_node_count}"
   min_master_version = "1.9.7-gke.1"
