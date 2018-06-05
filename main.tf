@@ -22,7 +22,7 @@ provider "google" {
 resource "google_container_cluster" "gke-std" {
   name               = "${var.name}"
   initial_node_count = "${var.initial_node_count}"
-  min_master_version = "1.9.4-gke.1"
+  min_master_version = "1.9.7-gke.1"
 
   addons_config {
     http_load_balancing {
