@@ -1,17 +1,3 @@
-variable "name" {
-  description = "gke cluster name"
-}
-
-variable "google_project" {
-  description = "google cloud project ID"
-  default     = "plasma-geode-127520"
-}
-
-variable "initial_node_count" {
-  description = "number of gke nodes to start"
-  default     = 3
-}
-
 provider "google" {
   project = "${var.google_project}"
   region  = "us-central1"
@@ -22,7 +8,7 @@ provider "google" {
 resource "google_container_cluster" "gke-std" {
   name               = "${var.name}"
   initial_node_count = "${var.initial_node_count}"
-  min_master_version = "1.9.4-gke.1"
+  min_master_version = "1.9.7-gke.1"
 
   addons_config {
     http_load_balancing {
@@ -55,23 +41,4 @@ resource "google_container_cluster" "gke-std" {
       "https://www.googleapis.com/auth/monitoring",
     ]
   }
-}
-
-output "host" {
-  value = "${google_container_cluster.gke-std.endpoint}"
-}
-
-output "client_certificate" {
-  sensitive = true
-  value     = "${google_container_cluster.gke-std.master_auth.0.client_certificate}"
-}
-
-output "client_key" {
-  sensitive = true
-  value     = "${google_container_cluster.gke-std.master_auth.0.client_key}"
-}
-
-output "cluster_ca_certificate" {
-  sensitive = true
-  value     = "${google_container_cluster.gke-std.master_auth.0.cluster_ca_certificate}"
 }
