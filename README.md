@@ -6,7 +6,8 @@ terraform `gke-std` module
 Usage
 ---
 
-    module "gke-std" {
+    module "gke4u" {
+      source = "github.com/lsst-sqre/terraform-gke-std"
       name = "mycluster"
       google_project = "plasma-geode-127520" # default
       initial_node_count = 3 # default

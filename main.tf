@@ -9,6 +9,7 @@ resource "google_container_cluster" "gke-std" {
   name               = "${var.name}"
   initial_node_count = "${var.initial_node_count}"
   min_master_version = "1.9.7-gke.1"
+  enable_legacy_abac = true
 
   addons_config {
     http_load_balancing {

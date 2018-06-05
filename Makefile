@@ -28,7 +28,10 @@ tf-install: $(TF_BIN)
 
 .PHONY: tf-init
 tf-init: tf-install
-	$(TF_BIN) init -backend=false
+	$(TF_BIN) init \
+		-backend=false \
+		-upgrade=true \
+		-get=true
 
 .PHONY: tf-test
 tf-test: tf-init tf-fmt tf-validate
