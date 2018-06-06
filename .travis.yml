@@ -16,6 +16,12 @@ matrix:
     - env: TEST=terraform
       language: c
       script: make test
+
+    - env: TEST=yamllint
+      language: c
+      services:
+        - docker
+      script: ./tests/yamllint.sh
 branches:
   only:
     - master
