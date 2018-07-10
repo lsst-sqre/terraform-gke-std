@@ -11,13 +11,15 @@ resource "google_container_cluster" "gke_std" {
   min_master_version = "${var.gke_version}"
   enable_legacy_abac = true
 
+  monitoring_service = "none"
+
   addons_config {
     http_load_balancing {
       disabled = false
     }
 
     kubernetes_dashboard {
-      disabled = false
+      disabled = true
     }
 
     horizontal_pod_autoscaling {
