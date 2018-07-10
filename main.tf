@@ -17,7 +17,7 @@ resource "google_container_cluster" "gke_std" {
     }
 
     kubernetes_dashboard {
-      disabled = false
+      disabled = true
     }
 
     horizontal_pod_autoscaling {
