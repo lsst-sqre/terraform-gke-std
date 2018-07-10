@@ -7,10 +7,11 @@ Usage
 ---
 
     module "gke4u" {
-      source = "github.com/lsst-sqre/terraform-gke-std"
-      name = "mycluster"
-      google_project = "plasma-geode-127520" # default
+      source             = "github.com/lsst-sqre/terraform-gke-std"
+      name               = "mycluster"
+      google_project     = "plasma-geode-127520" # default
       initial_node_count = 3 # default
+      gke_version        = "1.10.4-gke.2"
     }
 
 Outputs
@@ -20,6 +21,7 @@ Outputs
 * `client_certificate`
 * `client_key`
 * `cluster_ca_certificate`
+* `id`
 
 Resources created
 ---
