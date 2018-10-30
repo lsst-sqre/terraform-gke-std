@@ -14,5 +14,5 @@ variable "initial_node_count" {
 
 variable "gke_version" {
   description = "gke master/node version"
-  default     = "1.10.6-gke.2"
+  default     = "1.10.7-gke.6"
 }
