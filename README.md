@@ -11,7 +11,16 @@ Usage
       name               = "mycluster"
       google_project     = "plasma-geode-127520" # default
       initial_node_count = 3 # default
-      gke_version        = "1.10.4-gke.2"
+      gke_version        = "1.10.9-gke.5" # default
+    }
+
+    provider "kubernetes" {
+      version = "~> 1.3"
+
+      host                   = "${module.gke4u.host}"
+      client_certificate     = "${base64decode("${module.gke4u.client_certificate}")}"
+      client_key             = "${base64decode("${module.gke4u.client_key}")}"
+      cluster_ca_certificate = "${base64decode("${module.gke4u.cluster_ca_certificate}")}"
     }
 
 Outputs
