@@ -11,10 +11,10 @@ provider "kubernetes" {
   version = "~> 1.3"
   alias   = "gke_std"
 
-  host                   = "${google_container_cluster.gke_std.host}"
-  client_certificate     = "${base64decode("${google_container_cluster.gke_std.client_certificate}")}"
-  client_key             = "${base64decode("${google_container_cluster.gke_std.client_key}")}"
-  cluster_ca_certificate = "${base64decode("${google_container_cluster.gke_std.cluster_ca_certificate}")}"
+  host                   = "${google_container_cluster.gke_std.endpoint}"
+  client_certificate     = "${base64decode("${google_container_cluster.gke_std.master_auth.0.client_certificate}")}"
+  client_key             = "${base64decode("${google_container_cluster.gke_std.master_auth.0.client_key}")}"
+  cluster_ca_certificate = "${base64decode("${google_container_cluster.gke_std.master_auth.0.cluster_ca_certificate}")}"
 }
 
 resource "google_container_cluster" "gke_std" {
