@@ -1,11 +1,25 @@
 provider "google" {
+  version = "~> 1.13"
+  alias   = "gke_std"
+
   project = "${var.google_project}"
   region  = "us-central1"
   zone    = "us-central1-b"
-  version = "~> 1.13"
+}
+
+provider "kubernetes" {
+  version = "~> 1.3"
+  alias   = "gke_std"
+
+  host                   = "${google_container_cluster.gke_std.host}"
+  client_certificate     = "${base64decode("${google_container_cluster.gke_std.client_certificate}")}"
+  client_key             = "${base64decode("${google_container_cluster.gke_std.client_key}")}"
+  cluster_ca_certificate = "${base64decode("${google_container_cluster.gke_std.cluster_ca_certificate}")}"
 }
 
 resource "google_container_cluster" "gke_std" {
+  provider = "google.gke_std"
+
   name               = "${var.name}"
   initial_node_count = "${var.initial_node_count}"
   min_master_version = "${var.gke_version}"
