@@ -24,7 +24,7 @@ resource "google_container_cluster" "gke_std" {
   initial_node_count = "${var.initial_node_count}"
   min_master_version = "${var.gke_version}"
   node_version       = "${var.gke_version}"
-  enable_legacy_abac = true
+  enable_legacy_abac = false
 
   monitoring_service = "none"
 
