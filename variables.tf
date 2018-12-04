@@ -16,3 +16,8 @@ variable "gke_version" {
   description = "gke master/node version"
   default     = "1.10.9-gke.5"
 }
+
+variable "machine_type" {
+  description = "machine type of default gke pool nodes"
+  default     = "n1-standard-1"
+}

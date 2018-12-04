@@ -50,7 +50,7 @@ resource "google_container_cluster" "gke_std" {
 
   node_config {
     image_type   = "COS"
-    machine_type = "n1-standard-1"
+    machine_type = "${var.machine_type}"
 
     oauth_scopes = [
       "https://www.googleapis.com/auth/compute",
