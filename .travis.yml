@@ -17,6 +17,11 @@ matrix:
       services:
         - docker
       script: ./tests/yamllint.sh
+
+    - env: TEST=shellcheck
+      services:
+        - docker
+      script: ./tests/shellcheck.sh
 branches:
   only:
     - master
