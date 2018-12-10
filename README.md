@@ -12,6 +12,7 @@ Usage
       google_project     = "plasma-geode-127520" # default
       initial_node_count = 3 # default
       gke_version        = "1.10.9-gke.5" # default
+      machine_type       = "n1-standard-1"
     }
 
     provider "kubernetes" {

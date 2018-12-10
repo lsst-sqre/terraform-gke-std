@@ -24,7 +24,7 @@ resource "google_container_cluster" "gke_std" {
   initial_node_count = "${var.initial_node_count}"
   min_master_version = "${var.gke_version}"
   node_version       = "${var.gke_version}"
-  enable_legacy_abac = true
+  enable_legacy_abac = false
 
   monitoring_service = "none"
 
@@ -50,7 +50,7 @@ resource "google_container_cluster" "gke_std" {
 
   node_config {
     image_type   = "COS"
-    machine_type = "n1-standard-1"
+    machine_type = "${var.machine_type}"
 
     oauth_scopes = [
       "https://www.googleapis.com/auth/compute",
