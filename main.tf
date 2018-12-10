@@ -1,5 +1,5 @@
 provider "google" {
-  version = "~> 1.13"
+  version = "~> 1.19"
   alias   = "gke_std"
 
   project = "${var.google_project}"
