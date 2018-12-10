@@ -8,7 +8,7 @@ provider "google" {
 }
 
 provider "kubernetes" {
-  version = "~> 1.3"
+  version = "~> 1.4.0"
   alias   = "gke_std"
 
   host                   = "${google_container_cluster.gke_std.endpoint}"
