@@ -16,11 +16,11 @@ Usage
     }
 
     provider "kubernetes" {
-      version = "~> 1.3"
+      version = "~> 1.4"
+
+      load_config_file = true
 
       host                   = "${module.gke4u.host}"
-      client_certificate     = "${base64decode("${module.gke4u.client_certificate}")}"
-      client_key             = "${base64decode("${module.gke4u.client_key}")}"
       cluster_ca_certificate = "${base64decode("${module.gke4u.cluster_ca_certificate}")}"
     }
 
