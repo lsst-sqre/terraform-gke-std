@@ -12,7 +12,9 @@ matrix:
       script: ./tests/make.sh
 
     - env: TEST=terraform
-      script: make test
+      services:
+        - docker
+      script: ./tests/terraform.sh
 
     - env: TEST=yamllint
       services:
