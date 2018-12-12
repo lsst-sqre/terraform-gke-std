@@ -31,7 +31,6 @@ resource "google_container_cluster" "gke_std" {
   provider = "google.gke_std"
 
   name               = "${var.name}"
-  initial_node_count = "${var.initial_node_count}"
   min_master_version = "${local.gke_version}"
   node_version       = "${local.gke_version}"
   enable_legacy_abac = false
@@ -58,15 +57,31 @@ resource "google_container_cluster" "gke_std" {
     }
   }
 
-  node_config {
-    image_type   = "COS"
-    machine_type = "${var.machine_type}"
+  node_pool {
+    name               = "default-pool"
+    initial_node_count = "${var.initial_node_count}"
 
-    oauth_scopes = [
-      "https://www.googleapis.com/auth/compute",
-      "https://www.googleapis.com/auth/devstorage.read_only",
-      "https://www.googleapis.com/auth/logging.write",
-      "https://www.googleapis.com/auth/monitoring",
-    ]
+    management {
+      auto_repair  = "true"
+      auto_upgrade = "true"
+    }
+
+    node_config {
+      image_type   = "COS"
+      machine_type = "${var.machine_type}"
+
+      oauth_scopes = [
+        "https://www.googleapis.com/auth/compute",
+        "https://www.googleapis.com/auth/devstorage.read_only",
+        "https://www.googleapis.com/auth/logging.write",
+        "https://www.googleapis.com/auth/monitoring",
+      ]
+    }
+  }
+
+  timeouts {
+    create = "30m"
+    update = "30m"
+    delete = "30m"
   }
 }
