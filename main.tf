@@ -1,10 +1,16 @@
+locals {
+  google_region = "us-central1"
+  google_zone   = "us-central1-b"
+  gke_version   = "${var.gke_version != "latest" ? var.gke_version : data.google_container_engine_versions.gke_std.latest_node_version}"
+}
+
 provider "google" {
   version = "~> 1.19"
   alias   = "gke_std"
 
   project = "${var.google_project}"
-  region  = "us-central1"
-  zone    = "us-central1-b"
+  region  = "${local.google_region}"
+  zone    = "${local.google_zone}"
 }
 
 provider "kubernetes" {
@@ -17,13 +23,17 @@ provider "kubernetes" {
   cluster_ca_certificate = "${base64decode("${google_container_cluster.gke_std.master_auth.0.cluster_ca_certificate}")}"
 }
 
+data "google_container_engine_versions" "gke_std" {
+  provider = "google.gke_std"
+}
+
 resource "google_container_cluster" "gke_std" {
   provider = "google.gke_std"
 
   name               = "${var.name}"
   initial_node_count = "${var.initial_node_count}"
-  min_master_version = "${var.gke_version}"
-  node_version       = "${var.gke_version}"
+  min_master_version = "${local.gke_version}"
+  node_version       = "${local.gke_version}"
   enable_legacy_abac = false
 
   monitoring_service = "none"
