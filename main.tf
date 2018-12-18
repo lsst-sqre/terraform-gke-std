@@ -5,7 +5,6 @@ locals {
 }
 
 provider "google" {
-  version = "~> 1.19"
   alias   = "gke_std"
 
   project = "${var.google_project}"
@@ -14,7 +13,6 @@ provider "google" {
 }
 
 provider "kubernetes" {
-  version = "~> 1.4.0"
   alias   = "gke_std"
 
   load_config_file = true
