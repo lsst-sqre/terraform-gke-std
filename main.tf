@@ -5,7 +5,7 @@ locals {
 }
 
 provider "google" {
-  alias   = "gke_std"
+  alias = "gke_std"
 
   project = "${var.google_project}"
   region  = "${local.google_region}"
@@ -13,7 +13,7 @@ provider "google" {
 }
 
 provider "kubernetes" {
-  alias   = "gke_std"
+  alias = "gke_std"
 
   load_config_file = true
 
