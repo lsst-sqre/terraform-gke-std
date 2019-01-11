@@ -15,4 +15,7 @@ resource "kubernetes_storage_class" "pd_ssd" {
   parameters {
     type = "pd-ssd"
   }
+
+  # needed when the gke cluster is recreated
+  depends_on = ["google_container_cluster.gke_std"]
 }
