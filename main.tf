@@ -82,4 +82,10 @@ resource "google_container_cluster" "gke_std" {
     update = "30m"
     delete = "30m"
   }
+
+  lifecycle {
+    ignore_changes = [
+      "initial_node_count",
+    ]
+  }
 }
