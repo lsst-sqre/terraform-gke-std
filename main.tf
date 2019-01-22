@@ -86,6 +86,7 @@ resource "google_container_cluster" "gke_std" {
   lifecycle {
     ignore_changes = [
       "initial_node_count",
+      "node_pool.0.node_config.0.metadata",
     ]
   }
 }
