@@ -1,15 +1,13 @@
 locals {
-  google_region = "us-central1"
-  google_zone   = "us-central1-b"
-  gke_version   = "${var.gke_version != "latest" ? var.gke_version : data.google_container_engine_versions.gke_std.latest_node_version}"
+  gke_version = "${var.gke_version != "latest" ? var.gke_version : data.google_container_engine_versions.gke_std.latest_node_version}"
 }
 
 provider "google" {
   alias = "gke_std"
 
   project = "${var.google_project}"
-  region  = "${local.google_region}"
-  zone    = "${local.google_zone}"
+  region  = "${var.google_region}"
+  zone    = "${var.google_zone}"
 }
 
 provider "kubernetes" {

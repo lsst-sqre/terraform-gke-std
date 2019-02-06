@@ -10,6 +10,8 @@ Usage
       source             = "git::https://github.com/jhoblitt/terraform-gke-std.git//?ref=master"
       name               = "mycluster"
       google_project     = "plasma-geode-127520" # default
+      google_region      = "us-central1" # default
+      google_zone        = "us-central1-b" # default
       initial_node_count = 3 # default
       gke_version        = "latest" # default
       machine_type       = "n1-standard-1" # default

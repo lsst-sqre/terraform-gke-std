@@ -7,6 +7,16 @@ variable "google_project" {
   default     = "plasma-geode-127520"
 }
 
+variable "google_region" {
+  description = "google cloud region"
+  default     = "us-central1"
+}
+
+variable "google_zone" {
+  description = "google cloud region/zone"
+  default     = "us-central1-b"
+}
+
 variable "initial_node_count" {
   description = "number of gke nodes to start"
   default     = 3
