@@ -13,15 +13,15 @@ matrix:
         - docker
       script: ./tests/terraform.sh
 
-    - env: TEST=yamllint
-      services:
-        - docker
-      script: ./tests/yamllint.sh
-
     - env: TEST=shellcheck
       services:
         - docker
       script: ./tests/shellcheck.sh
+
+    - env: TEST=yamllint
+      services:
+        - docker
+      script: ./tests/yamllint.sh
 branches:
   only:
     - master
