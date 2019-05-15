@@ -31,6 +31,7 @@ Usage
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
+| gcloud\_cmd | Whether to write a Kubectl config file containing the cluster configuration. Saved to `kubeconfig_output_path`. | string | `"gcloud"` | no |
 | gke\_version | gke master/node version | string | `"latest"` | no |
 | google\_project | google cloud project ID | string | `"plasma-geode-127520"` | no |
 | google\_region | google cloud region | string | `"us-central1"` | no |
@@ -46,6 +47,8 @@ Usage
 | cluster\_ca\_certificate |  |
 | host |  |
 | id |  |
+| kubeconfig | kubeconfig format string |
+| kubeconfig\_filename | path to output kubeconfig format file |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
