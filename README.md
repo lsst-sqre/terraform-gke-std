@@ -43,8 +43,6 @@ Usage
 
 | Name | Description |
 |------|-------------|
-| client\_certificate |  |
-| client\_key |  |
 | cluster\_ca\_certificate |  |
 | host |  |
 | id |  |
