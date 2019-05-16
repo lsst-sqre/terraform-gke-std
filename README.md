@@ -6,25 +6,47 @@ terraform `gke-std` module
 Usage
 ---
 
-    module "gke4u" {
-      source             = "git::https://github.com/jhoblitt/terraform-gke-std.git//?ref=master"
-      name               = "mycluster"
-      google_project     = "plasma-geode-127520" # default
-      google_region      = "us-central1" # default
-      google_zone        = "us-central1-b" # default
-      initial_node_count = 3 # default
-      gke_version        = "latest" # default
-      machine_type       = "n1-standard-1" # default
-    }
+```hcl
+#
+# create gke cluster
+#
 
-    provider "kubernetes" {
-      version = "~> 1.4"
+provider "google" {
+  project = "${var.google_project}"
+  region  = "${var.google_region}"
+  zone    = "${var.google_zone}"
+}
 
-      load_config_file = true
+# uses google provider
+module "gke" {
+  source             = "git::https://github.com/jhoblitt/terraform-gke-std.git//?ref=master"
+  name               = "mycluster"
+  initial_node_count = 3 # default
+  gke_version        = "latest" # default
+  machine_type       = "n1-standard-1" # default
+}
 
-      host                   = "${module.gke4u.host}"
-      cluster_ca_certificate = "${base64decode("${module.gke4u.cluster_ca_certificate}")}"
-    }
+#
+# configure kubernetes provider
+#
+
+# write out our own copy of kubeconfig
+resource "local_file" "kubeconfig" {
+  content  = "${module.gke.kubeconfig}"
+  filename = "${local.kubeconfig_filename}"
+
+  # this forces the gke cluster to be up before proceeding to the efd deployment
+  depends_on = ["module.gke"]
+}
+
+provider "kubernetes" {
+  version = "~> 1.6.2"
+
+  config_path      = "${local_file.kubeconfig.filename}"
+  load_config_file = true
+}
+
+```
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Inputs
