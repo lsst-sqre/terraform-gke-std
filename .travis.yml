@@ -29,6 +29,7 @@ matrix:
 branches:
   only:
     - master
+    - /^\d+\.x$/
     # also matched against tag pushes
     - /^\d+\.\d+\.\d+$/
 notifications:
