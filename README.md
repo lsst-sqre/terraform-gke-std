@@ -42,7 +42,7 @@ resource "local_file" "kubeconfig" {
 provider "kubernetes" {
   version = "~> 1.6.2"
 
-  config_path      = "${local_file.kubeconfig.filename}"
+  config_path      = "/tmp/kubeconfig"
   load_config_file = true
 }
 
