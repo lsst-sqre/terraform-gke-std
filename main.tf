@@ -2,30 +2,42 @@ locals {
   gke_version = "${var.gke_version != "latest" ? var.gke_version : data.google_container_engine_versions.gke_std.latest_node_version}"
 }
 
-provider "google" {
-  alias = "gke_std"
-
-  project = "${var.google_project}"
-  region  = "${var.google_region}"
-  zone    = "${var.google_zone}"
-}
-
 provider "kubernetes" {
-  alias = "gke_std"
+  version = "1.6.2"
+  alias   = "gke_std"
 
   load_config_file = true
-
-  host                   = "${google_container_cluster.gke_std.endpoint}"
-  cluster_ca_certificate = "${base64decode("${google_container_cluster.gke_std.master_auth.0.cluster_ca_certificate}")}"
+  config_path      = "${local.kubeconfig_filename}"
 }
 
-data "google_container_engine_versions" "gke_std" {
-  provider = "google.gke_std"
+resource "null_resource" "k8s_ready" {
+  provisioner "local-exec" {
+    working_dir = "${path.module}"
+
+    command = <<EOS
+for i in `seq 1 10`; do \
+kubectl --kubeconfig ${null_resource.k8s_ready.triggers.config_path} get ns && break || \
+sleep 10; \
+done; \
+EOS
+
+    interpreter = ["/bin/sh", "-c"]
+  }
+
+  triggers {
+    config_path = "${local_file.kubeconfig.filename}"
+    kubeconfig  = "${local_file.kubeconfig.content}"
+  }
+
+  depends_on = [
+    "local_file.kubeconfig",
+    "google_container_cluster.gke_std",
+  ]
 }
+
+data "google_container_engine_versions" "gke_std" {}
 
 resource "google_container_cluster" "gke_std" {
-  provider = "google.gke_std"
-
   name               = "${var.name}"
   min_master_version = "${local.gke_version}"
   node_version       = "${local.gke_version}"

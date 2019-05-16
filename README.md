@@ -6,35 +6,55 @@ terraform `gke-std` module
 Usage
 ---
 
-    module "gke4u" {
-      source             = "git::https://github.com/jhoblitt/terraform-gke-std.git//?ref=master"
-      name               = "mycluster"
-      google_project     = "plasma-geode-127520" # default
-      google_region      = "us-central1" # default
-      google_zone        = "us-central1-b" # default
-      initial_node_count = 3 # default
-      gke_version        = "latest" # default
-      machine_type       = "n1-standard-1" # default
-    }
+```hcl
+#
+# create gke cluster
+#
 
-    provider "kubernetes" {
-      version = "~> 1.4"
+provider "google" {
+  project = "${var.google_project}"
+  region  = "${var.google_region}"
+  zone    = "${var.google_zone}"
+}
 
-      load_config_file = true
+# uses google provider
+module "gke" {
+  source             = "git::https://github.com/jhoblitt/terraform-gke-std.git//?ref=master"
+  name               = "mycluster"
+  initial_node_count = 3 # default
+  gke_version        = "latest" # default
+  machine_type       = "n1-standard-1" # default
+}
 
-      host                   = "${module.gke4u.host}"
-      cluster_ca_certificate = "${base64decode("${module.gke4u.cluster_ca_certificate}")}"
-    }
+#
+# configure kubernetes provider
+#
+
+# write out our own copy of kubeconfig
+resource "local_file" "kubeconfig" {
+  content  = "${module.gke.kubeconfig}"
+  filename = "${local.kubeconfig_filename}"
+
+  # this forces the gke cluster to be up before proceeding to the efd deployment
+  depends_on = ["module.gke"]
+}
+
+provider "kubernetes" {
+  version = "~> 1.6.2"
+
+  config_path      = "${local_file.kubeconfig.filename}"
+  load_config_file = true
+}
+
+```
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
+| gcloud\_cmd | Whether to write a Kubectl config file containing the cluster configuration. Saved to `kubeconfig_output_path`. | string | `"gcloud"` | no |
 | gke\_version | gke master/node version | string | `"latest"` | no |
-| google\_project | google cloud project ID | string | `"plasma-geode-127520"` | no |
-| google\_region | google cloud region | string | `"us-central1"` | no |
-| google\_zone | google cloud region/zone | string | `"us-central1-b"` | no |
 | initial\_node\_count | number of gke nodes to start | string | `"3"` | no |
 | machine\_type | machine type of default gke pool nodes | string | `"n1-standard-1"` | no |
 | name | gke cluster name | string | n/a | yes |
@@ -43,11 +63,11 @@ Usage
 
 | Name | Description |
 |------|-------------|
-| client\_certificate |  |
-| client\_key |  |
 | cluster\_ca\_certificate |  |
 | host |  |
 | id |  |
+| kubeconfig | kubeconfig format string |
+| kubeconfig\_filename | path to output kubeconfig format file |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
