@@ -1,17 +1,11 @@
 ---
-sudo: false
-language: c
+language: minimal
 matrix:
   include:
     - env: TEST=markdownlint
       services:
         - docker
       script: ./tests/mdl.sh
-
-    - env: TEST=pre-commit
-      services:
-        - docker
-      script: ./tests/pre-commit.sh
 
     - env: TEST=pre-commit
       services:
