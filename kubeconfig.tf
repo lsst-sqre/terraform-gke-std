@@ -9,6 +9,7 @@ data "template_file" "kubeconfig" {
   }
 }
 
+# there does not seem to be a sane way to ignore changes in the file on disk
 resource "local_file" "kubeconfig" {
   content  = "${data.template_file.kubeconfig.rendered}"
   filename = "${local.kubeconfig_filename}"

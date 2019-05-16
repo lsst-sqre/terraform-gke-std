@@ -33,9 +33,6 @@ Usage
 |------|-------------|:----:|:-----:|:-----:|
 | gcloud\_cmd | Whether to write a Kubectl config file containing the cluster configuration. Saved to `kubeconfig_output_path`. | string | `"gcloud"` | no |
 | gke\_version | gke master/node version | string | `"latest"` | no |
-| google\_project | google cloud project ID | string | `"plasma-geode-127520"` | no |
-| google\_region | google cloud region | string | `"us-central1"` | no |
-| google\_zone | google cloud region/zone | string | `"us-central1-b"` | no |
 | initial\_node\_count | number of gke nodes to start | string | `"3"` | no |
 | machine\_type | machine type of default gke pool nodes | string | `"n1-standard-1"` | no |
 | name | gke cluster name | string | n/a | yes |

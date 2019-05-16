@@ -2,14 +2,6 @@ locals {
   gke_version = "${var.gke_version != "latest" ? var.gke_version : data.google_container_engine_versions.gke_std.latest_node_version}"
 }
 
-provider "google" {
-  alias = "gke_std"
-
-  project = "${var.google_project}"
-  region  = "${var.google_region}"
-  zone    = "${var.google_zone}"
-}
-
 provider "kubernetes" {
   version = "1.6.2"
   alias   = "gke_std"
@@ -43,13 +35,9 @@ EOS
   ]
 }
 
-data "google_container_engine_versions" "gke_std" {
-  provider = "google.gke_std"
-}
+data "google_container_engine_versions" "gke_std" {}
 
 resource "google_container_cluster" "gke_std" {
-  provider = "google.gke_std"
-
   name               = "${var.name}"
   min_master_version = "${local.gke_version}"
   node_version       = "${local.gke_version}"
