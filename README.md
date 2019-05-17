@@ -6,7 +6,7 @@ terraform `gke-std` module
 Usage
 ---
 
-```hcl
+```terraform
 #
 # create gke cluster
 #
@@ -30,12 +30,11 @@ module "gke" {
 # configure kubernetes provider
 #
 
-# write out our own copy of kubeconfig
+# write out a copy of the kubeconfig
 resource "local_file" "kubeconfig" {
   content  = "${module.gke.kubeconfig}"
-  filename = "${local.kubeconfig_filename}"
+  filename = "/tmp/kubeconfig"
 
-  # this forces the gke cluster to be up before proceeding to the efd deployment
   depends_on = ["module.gke"]
 }
 
