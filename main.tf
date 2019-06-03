@@ -3,8 +3,7 @@ locals {
 }
 
 provider "kubernetes" {
-  version = "1.6.2"
-  alias   = "gke_std"
+  alias = "gke_std"
 
   load_config_file = true
   config_path      = "${local.kubeconfig_filename}"
