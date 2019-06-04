@@ -6,6 +6,8 @@ terraform `gke-std` module
 Usage
 ---
 
+### create "gke" cluster
+
 ```terraform
 #
 # create gke cluster
@@ -25,7 +27,27 @@ module "gke" {
   gke_version        = "latest" # default
   machine_type       = "n1-standard-1" # default
 }
+```
 
+### direct `kubernetes` provider config example
+
+```terraform
+#
+# configure kubernetes provider
+#
+provider "kubernetes" {
+  version = "~> 1.6.2"
+
+  load_config_file = false
+  host                   = "${module.gke.host}"
+  cluster_ca_certificate = "${base64decode(module.gke.cluster_ca_certificate)}"
+  token                  = "${module.gke.token}"
+}
+```
+
+### `kubernetes` provider using `kubeconfig` example
+
+```terraform
 #
 # configure kubernetes provider
 #
@@ -44,7 +66,6 @@ provider "kubernetes" {
   config_path      = "/tmp/kubeconfig"
   load_config_file = true
 }
-
 ```
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
