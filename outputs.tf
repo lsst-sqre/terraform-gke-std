@@ -1,5 +1,12 @@
 output "host" {
-  value = "${google_container_cluster.gke_std.endpoint}"
+  description = "kubernetes cluster api endpoint host"
+  value       = "${google_container_cluster.gke_std.endpoint}"
+}
+
+output "token" {
+  description = "kubernetes cluster access token"
+  sensitive   = true
+  value       = "${data.google_client_config.default.access_token}"
 }
 
 output "cluster_ca_certificate" {

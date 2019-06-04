@@ -63,10 +63,11 @@ provider "kubernetes" {
 | Name | Description |
 |------|-------------|
 | cluster\_ca\_certificate |  |
-| host |  |
+| host | kubernetes cluster api endpoint host |
 | id |  |
 | kubeconfig | kubeconfig format string |
 | kubeconfig\_filename | path to output kubeconfig format file |
+| token | kubernetes cluster access token |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
