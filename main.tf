@@ -2,11 +2,15 @@ locals {
   gke_version = "${var.gke_version != "latest" ? var.gke_version : data.google_container_engine_versions.gke_std.latest_node_version}"
 }
 
+data "google_client_config" "default" {}
+
 provider "kubernetes" {
   alias = "gke_std"
 
-  load_config_file = true
-  config_path      = "${local.kubeconfig_filename}"
+  load_config_file       = false
+  host                   = "${google_container_cluster.gke_std.endpoint}"
+  cluster_ca_certificate = "${base64decode(google_container_cluster.gke_std.master_auth.0.cluster_ca_certificate)}"
+  token                  = "${data.google_client_config.default.access_token}"
 }
 
 resource "null_resource" "k8s_ready" {
