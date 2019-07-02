@@ -21,7 +21,3 @@ variable "gcloud_cmd" {
   description = "Whether to write a Kubectl config file containing the cluster configuration. Saved to `kubeconfig_output_path`."
   default     = "gcloud"
 }
-
-locals {
-  kubeconfig_filename = "${path.module}/kubeconfig_${var.name}"
-}

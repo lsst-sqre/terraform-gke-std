@@ -13,31 +13,6 @@ provider "kubernetes" {
   token                  = "${data.google_client_config.default.access_token}"
 }
 
-resource "null_resource" "k8s_ready" {
-  provisioner "local-exec" {
-    working_dir = "${path.module}"
-
-    command = <<EOS
-for i in `seq 1 10`; do \
-kubectl --kubeconfig ${null_resource.k8s_ready.triggers.config_path} get ns && break || \
-sleep 10; \
-done; \
-EOS
-
-    interpreter = ["/bin/sh", "-c"]
-  }
-
-  triggers {
-    config_path = "${local_file.kubeconfig.filename}"
-    kubeconfig  = "${local_file.kubeconfig.content}"
-  }
-
-  depends_on = [
-    "local_file.kubeconfig",
-    "google_container_cluster.gke_std",
-  ]
-}
-
 data "google_container_engine_versions" "gke_std" {}
 
 resource "google_container_cluster" "gke_std" {

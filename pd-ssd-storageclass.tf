@@ -18,6 +18,6 @@ resource "kubernetes_storage_class" "pd_ssd" {
 
   # needed when the gke cluster is recreated
   depends_on = [
-    "null_resource.k8s_ready",
+    "google_container_cluster.gke_std",
   ]
 }
