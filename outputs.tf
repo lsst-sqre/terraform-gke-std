@@ -15,11 +15,6 @@ output "cluster_ca_certificate" {
   value     = "${google_container_cluster.gke_std.master_auth.0.cluster_ca_certificate}"
 }
 
-output "kubeconfig_filename" {
-  description = "path to output kubeconfig format file"
-  value       = "${pathexpand(local_file.kubeconfig.*.filename[0])}"
-}
-
 output "kubeconfig" {
   # not actually sensitive... just a lot of output
   sensitive   = true
